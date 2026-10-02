@@ -1,0 +1,16 @@
+rules_version = '2';
+
+// Every read and write of visitor data goes through the Next.js server using
+// the Firebase Admin SDK, which bypasses these rules. Denying everything here
+// is what guarantees that no browser, app or scraper can read the
+// congregation's phone numbers and dates of birth directly from Firestore.
+//
+// Do not add `allow` rules. Adding a new visitor feature does not require
+// touching this file.
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
